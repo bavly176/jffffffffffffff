@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بحث عن العملاء</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://www.lawsetihad.com/img/8.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #2C3E50;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #2C3E50;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #34495E;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #BDC3C7;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #ecf0f1;
+            color: #2C3E50;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #2980B9;
+            outline: none;
+            box-shadow: 0 0 5px rgba(41, 128, 185, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2980B9;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3498DB;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .alert {
+            background-color: #2ECC71;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .error {
+            background-color: #E74C3C;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .customer-list {
+            margin-top: 20px;
+        }
+
+        .customer-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .customer-list li {
+            background-color: #f4f6f7;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .customer-list li span {
+            color: #2980B9;
+            cursor: pointer;
+        }
+
+        .customer-list li span:hover {
+            color: #3498DB;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>بحث عن العميل</h1>
+
+        <h2>بحث عن العميل</h2>
+        <input type="text" id="searchName" placeholder="ابحث عن اسم العميل">
+        <button onclick="searchCustomer()">بحث</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // جلب البيانات من localStorage أو تهيئة مصفوفة فارغة
+        let customers = JSON.parse(localStorage.getItem('customers')) || [];
+
+        function searchCustomer() {
+            const searchName = document.getElementById('searchName').value.trim().toLowerCase();
+
+            // البحث عن جميع العملاء الذين يبدأ اسمهم الأول بالاسم المدخل
+            const matchingCustomers = customers.filter(c => c.name.toLowerCase().startsWith(searchName));
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (matchingCustomers.length > 0) {
+                resultDiv.innerHTML = '<strong>العملاء المطابقين:</strong><br>';
+                matchingCustomers.forEach(customer => {
+                    const customerInfo = document.createElement('div');
+                    customerInfo.textContent = `${customer.name} - ${customer.id}`;
+                    resultDiv.appendChild(customerInfo);
+                });
+                resultDiv.style.color = '#2ECC71';
+            } else {
+                resultDiv.innerHTML = 'لا يوجد عملاء بهذا الاسم.';
+                resultDiv.style.color = '#E74C3C';
+            }
+        }
+    </script>
+
+</body>
+</html>
